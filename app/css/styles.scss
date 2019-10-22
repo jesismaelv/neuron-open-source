@@ -1,0 +1,782 @@
+@import "mixin.scss";
+@import "bootstrap.scss";
+
+$white: #f5f3f3;
+$black: #111;
+$oscuro: #485764;
+$azul: #5f7e8b;
+$gris: #879696;
+$cielo: #b6c1c3;
+
+$gris1: #111;
+$gris2: #333333;
+$gris3: #555;
+$gris4: #666;
+$gris5: #999;
+$gris6: #CCC;
+$gris7: #eee;
+
+//@import url('https://fonts.googleapis.com/css?family=Roboto:400,400i,500,700,900');
+
+
+* {
+  font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', sans-serif;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+@mixin boton() {
+  @include reset-appearance;
+  display: inline-block;
+  margin: 5px;
+  border: 1px solid $oscuro;
+  color: $oscuro;
+  padding: 0.5em 1.2em;
+  @include borde-redondo();
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:first-child {
+    margin-left: 0px;
+  }
+
+  &:last-child {
+    margin-right: 0px;
+  }
+
+  &[data-disabled] {
+    opacity: 0.5;
+  }
+
+  &.active {
+    background-color: $oscuro;
+    color: $white;
+    font-weight: bold;
+    position: relative;
+
+    &:after {
+      content: '';
+      display: block;
+      background-color: $oscuro;
+      width: 1em;
+      height: 1em;
+      position: absolute;
+      right: 0;
+      top: 50%;
+
+      transform: translate(50%, -50%) rotate(45deg);
+    }
+  }
+
+  &:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline: none;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: $white;
+}
+
+a {
+  color: $black;
+  text-decoration: none;
+}
+
+.link {
+  @include reset-appearance();
+  color: $azul;
+  text-decoration: underline;
+}
+
+h1 {
+  font-weight: normal;
+}
+
+h2 {
+  color: $oscuro;
+}
+
+.button {
+  @include boton();
+
+  &.--primary {
+    background-color: $oscuro;
+    color: $white;
+    font-weight: bold;
+  }
+
+  &.--start {
+    @include bgimage('../img/arrow-right--white.svg');
+    background-position: calc(100% - 0.8em) center;
+    background-size: 0.4em auto;
+    padding-right: 1.8em;
+  }
+}
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=number],
+select,
+textarea {
+  @include reset-appearance;
+  display: block;
+  width: 100%;
+  padding: 1em 1.5em;
+  border: 1px solid #BBB;
+  @include borde-redondo();
+  outline: none;
+
+  &:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline: none;
+  }
+}
+
+[data-input] {
+  &:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    outline: none;
+  }
+}
+
+.no_results {
+  border: 1px dashed $gris;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: block;
+  width: 100%;
+  @include borde-redondo();
+  color: $gris;
+}
+
+input.inline-input {
+  background-color: transparent;
+  border: 0px solid transparent;
+  width: 3em;
+  font-size: 1em;
+  padding: 1px;
+  display: inline-block;
+  @include borde-redondo(0);
+  border-bottom: 1px solid $black;
+  text-align: center;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+input.inline-input--large {}
+
+main {
+  padding: 30px 0 90px;
+}
+
+.main-nav {
+  width: 100%;
+  display: block;
+  padding: 30px 0px;
+  background-color: $white;
+  height: 90px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.main-nav__logo {
+  height: 100%;
+  width: 200px;
+  display: inline-block;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: $black;
+  }
+}
+
+.btn-mobile {
+  display: none;
+}
+
+.menu__links {
+  display: block;
+  text-align: right;
+}
+
+.menu__link {
+  @include reset-appearance();
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 15px;
+  color: $oscuro;
+  position: relative;
+  cursor: pointer;
+}
+
+.menu__link--simple {
+  padding-bottom: 5px;
+
+  &:hover:after {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+
+  &:after {
+    @include transicion();
+    position: absolute;
+    bottom: 0px;
+    left: 2px;
+    right: -1px;
+    content: '';
+    display: block;
+    transform: scale(0, 1);
+    opacity: 0;
+    background-color: $oscuro;
+    height: 1px;
+  }
+}
+
+.menu__link__action,
+.menu__link__second-action {
+  margin-left: 15px;
+  font-size: 14px;
+}
+
+.menu__link__account {
+  @include bgimage('../img/user.svg');
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  text-indent: -9999px;
+  background-size: contain;
+  margin-left: 15px;
+  position: relative;
+  cursor: pointer;
+
+  &.active .dropdown-porfile {
+    opacity: 1;
+    transform: scale(1, 1) rotateZ(0);
+    pointer-events: initial;
+  }
+}
+
+.dropdown-porfile {
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  width: 250px;
+  opacity: 0;
+  transform: scale(1, 0) rotateZ(90);
+  text-indent: 0;
+  pointer-events: none;
+  @include transicion();
+
+  .porfile-content {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    background-color: $white;
+    @include borde-redondo();
+    text-align: center;
+    padding: 20px 15px;
+
+    h4,
+    p {
+      margin: 0px;
+      display: block;
+    }
+
+    p {
+      color: $gris;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .link {
+      display: block;
+      margin-top: 15px;
+    }
+  }
+}
+
+.login-page {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.login-content {
+  text-align: center;
+  max-width: 400px;
+  display: inline-block;
+  width: 100%;
+
+  .input-group {
+    text-align: left;
+  }
+
+  .button {
+    width: 100%;
+    background-color: $oscuro;
+    color: $white;
+    font-size: 16px;
+  }
+}
+
+.input-group {
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+
+  p.error {
+    display: block;
+    color: #900;
+    font-size: 14px;
+    font-style: italic;
+    margin: 0px;
+  }
+
+  label {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+}
+
+.notice {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: $gris;
+  padding: 20px;
+  @include borde-redondo();
+  color: $white;
+}
+
+.nay-nay {
+  animation-name: naynay;
+  animation-duration: 0.1s;
+  animation-iteration-count: 3;
+  animation-direction: alternate;
+  transform: translate(0, 0);
+  @include transicion(0.1s);
+}
+
+@keyframes naynay {
+  from {
+    transform: translate(-10px, 0);
+  }
+
+  from {
+    transform: translate(10px, 0);
+  }
+}
+
+pre {
+  background-color: $gris;
+  border: 1px solid $black;
+  margin: 10px;
+  @include borde-redondo;
+  padding: 15px;
+  color: $white;
+}
+
+.home-options {
+  label {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}
+
+.status {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+
+.status.loading {
+  border: 1.5px solid $gris;
+  @include borde-redondo(50%);
+  position: relative;
+  animation-name: rotate;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  &:after {
+    content: '';
+    display: block;
+    width: 0.5em;
+    height: 0.5em;
+    position: absolute;
+    top: -0.12em;
+    left: -0.12em;
+    background-color: $gris;
+    @include borde-redondo(50%);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(364deg);
+  }
+}
+
+.status.done {
+  @include bgimage('../img/check.svg');
+  background-size: contain;
+  animation-delay: 1s;
+  animation-name: fade;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.status.error {
+  &:before {
+    content: "X";
+    color: red;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+
+.dragger {
+  @include bgimage('../img/options.svg');
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  background-size: auto 1em;
+  background-position: top center;
+  text-indent: -9999px;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.main-idea-header {
+  width: 100%;
+  font-size: 25px;
+  font-weight: bold;
+
+  &+.add-idea {
+    display: block;
+  }
+}
+
+
+.idea {
+  font-size: 35px;
+  opacity: 1;
+
+  &>.idea__children>.idea {
+    font-size: 0.8em;
+    opacity: 0.8;
+  }
+
+
+  [contenteditable] {
+    transition: all 0.5s ease;
+
+    &.--loading {
+      background-color: black;
+    }
+
+    &.--error {
+      background-color: red;
+    }
+  }
+
+  [contenteditable]:empty {
+    background-color: $gris6;
+
+    &:focus {
+      background-color: transparent;
+    }
+  }
+
+  [contenteditable]:focus {
+    outline: none;
+    background-color: lighter($white, 10%);
+  }
+
+  .goto-idea {
+    display: none;
+  }
+
+  [class*="idea-content-wrapper"] {
+    background-color: red;
+  }
+}
+
+.idea__content {
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  margin-bottom: 0.5em;
+  color: $gris1;
+  font-size: inherit;
+}
+
+.idea__content__wrapper {
+  font-size: inherit;
+  position: relative;
+}
+
+.idea__children {
+  padding-left: 10px;
+  border-left: 1px solid #c0c0c0;
+}
+
+.add-idea {
+  display: none;
+  margin: 10px 0px;
+  @include reset-appearance;
+  width: 100%;
+  height: 3px;
+  position: relative;
+  background-color: $cielo;
+  cursor: pointer;
+  opacity: 0.2;
+
+  &:hover {
+    opacity: 1;
+    background-color: $gris4;
+
+    &:after {
+      opacity: 1;
+    }
+  }
+
+  &:after {
+    opacity: 0;
+    content: '+';
+    position: absolute;
+    display: block;
+    left: 50%;
+    top: 50%;
+    font-size: 15px;
+    transform: translate(-50%, -50%);
+    background-color: $gris4;
+    color: white;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+  }
+}
+
+
+.father-ideas {
+  margin-bottom: 30px;
+}
+
+.father-home {
+  vertical-align: bottom;
+  display: inline-block;
+  padding: 5px 15px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  border-radius: 5px;
+  background-color: #DDD;
+  font-weight: bold;
+  text-transform: uppercase;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    background-color: #CCC;
+    max-width: 200px;
+  }
+}
+
+.father-idea__wrapper {
+  display: inline-flex;
+  vertical-align: bottom;
+  flex-flow: column-reverse;
+
+  &:hover {
+    .father-idea {
+      opacity: 1;
+    }
+  }
+}
+
+.father-idea {
+  @include reset-appearance;
+  transition: 0.5s ease;
+  display: block;
+  padding: 5px 15px 5px 5px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  border-radius: 5px;
+  background-color: #DDD;
+  font-weight: bold;
+  text-transform: uppercase;
+  max-width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  margin-top: 3px;
+
+  &:hover {
+    background-color: #CCC;
+    max-width: 200px;
+  }
+
+  &+.father-idea {
+    font-size: 0.2em;
+    opacity: 0;
+  }
+
+  &.add-father-idea {
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  button {
+    @include reset-appearance;
+    background-color: $gris5;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $gris4;
+    }
+  }
+}
+
+.father-search {
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background-color: $white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 700px;
+
+  &.--active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  input {
+    padding: 0.5em 1em;
+    font-size: 16px;
+  }
+
+  .button-wrapper {
+    text-align: right;
+  }
+}
+
+.father-results {
+  list-style: none;
+  padding: 0;
+  max-height: 300px;
+  overflow: auto;
+
+
+  li {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+
+  label {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+  }
+
+  .add-as__wrapper {
+    display: inline-flex;
+    margin-right: 5px;
+
+  }
+
+  .add-as {
+    display: block;
+    margin: 0;
+
+    &:hover {
+      background-color: $gris6;
+    }
+
+    &.--loading {
+      background-color: $black;
+      color: $black;
+    }
+
+    &.--done {
+      background-color: $oscuro;
+      color: white;
+    }
+  }
+
+  .add-as-child {
+    border-radius: 0px 3px 3px 0px;
+    margin-left: -1px;
+  }
+
+  .add-as-parent {
+    border-radius: 3px 0px 0px 3px;
+  }
+
+}
