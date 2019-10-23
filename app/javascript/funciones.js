@@ -6,32 +6,9 @@ document.addEventListener('click', function (e) {
   if (e.target.hasAttribute('data-add-as-parent')) {
     e.preventDefault;
     e.target.classList.add('--loading');
-    father_id = e.target.getAttribute('data-add-as-parent');
-    child_id = $('#father-search__current-id').val();
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        let content = this.responseText;
-        if (content) {
-          e.target.classList.remove('--loading');
-        }
-        if (content == 'done') {
-          e.target.classList.add('--done');
-        } else {
-          e.target.classList.remove('--error');
-          console.log(content);
-        }
-      };
-    }
-    xhttp.open("GET", `relatioships_handler.php?child-id=${child_id}&father-id=${father_id}&action=add`, true);
-    xhttp.send();
-  }
-
-  if (e.target.hasAttribute('data-add-as-child')) {
-    e.preventDefault;
-    e.target.classList.add('--loading');
-    child_id = e.target.getAttribute('data-add-as-child');
-    father_id = $('#father-search__current-id').val();
+    const args = e.target.getAttribute('data-add-as-parent').split(',');
+    father_id = args[0];
+    child_id = args[1];
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
@@ -76,20 +53,31 @@ document.addEventListener('click', function (e) {
     xhttp.open("GET", `relatioships_handler.php?child-id=${child_id}&father-id=${father_id}&action=remove`, true);
     xhttp.send();
   }
+
+  if (e.target.hasAttribute('data-toggle')) {
+    const cls = e.target.getAttribute('data-toggle');
+    if(cls == '') {
+      cls = '--active';
+    }
+    $(e.target).toggleClass(cls);
+    if(e.target.hasAttribute('data-target')) {
+      const target = e.target.getAttribute('data-target');
+      $(target).toggleClass(cls);
+    }
+  }
 });
 
 $(document).on('focus', "[data-update-id]", function (a) {
   self = a.target;
   id = self.getAttribute('data-update-id');
-  $(`[data-update-id='${id}']`).addClass('--focused');
-  console.log('yea');
+  $(`[data-idea='${id}']`).addClass('--focused');
 }).on('blur', "[data-update-id]", function (e) {
   self = e.target;
   self.classList.add('--loading');
   id = self.getAttribute('data-update-id');
   value = self.innerHTML;
   update_idea(id, value, self);
-  $(`[data-update-id='${id}']`).removeClass('--focused');
+  $(`[data-idea='${id}']`).removeClass('--focused');
   $(`[data-update-id='${id}']`).html(value);
 });
 
@@ -121,20 +109,22 @@ $(document).on('keydown', "[data-update-id]", function (e) {
     let html = e.target.innerHTML;
     if (html == '') {
       let id = e.target.getAttribute('data-update-id');
-      deleteIdea(id);
+      deleteIdea(id, e.target);
     }
   }
 
   // NEW BROTHER
   if (e.keyCode == 13 && !shiftKey) {
     const id = e.target.getAttribute('data-father-id');
-    load_idea(id, 'brother');
+    load_idea(id, e.target);
     return false;
   }
   // NEW SON
   if (e.keyCode == 13 && shiftKey) {
     const id = e.target.getAttribute('data-update-id');
-    load_idea(id, 'child');
+    $(`[data-idea='${id}']`).removeClass('--hide');
+    $(`[data-idea='${id}'] .hide-children`).removeClass('--hide');
+    load_idea(id, e.target);
     return false;
   }
 
@@ -183,19 +173,18 @@ function showFatherSearch(id) {
   return false;
 }
 
-function deleteIdea(id) {
+function deleteIdea(id, element) {
+  console.log(element);
   var xhttp = new XMLHttpRequest();
   var content = '';
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       content = this.responseText;
+      console.log(element);
       if (content == 'done') {
-        element = document.querySelector(`[data-update-id="${id}"]`);
-        ideaNode = document.querySelector(`[data-idea="${id}"]`);
         var index = $(element).index('[data-update-id]');
         placeCaretAtEnd(document.querySelectorAll('[data-update-id]')[index - 1]);
-
-        ideaNode.remove();
+        $(`[data-update-id=${id}]`).remove();
       } else {
         console.log(content);
       }
@@ -224,7 +213,7 @@ function update_idea(id, value, target) {
   return content;
 }
 
-function load_idea(father, type) {
+function load_idea(father, element) {
   var xhttp = new XMLHttpRequest();
   let url = `idea.php?`;
   url = `${url}father=${father}`;

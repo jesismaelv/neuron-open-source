@@ -12,7 +12,7 @@
         'id' => '0',
         'creation' => Date('Y-m-d H:i:s'),
         'date' => Date('Y-m-d H:i:s'),
-        'content' => '^Nemo',
+        'content' => '^Neuron',
       ];
     }
 ?>
@@ -24,7 +24,7 @@
       if($father_id != '0') :
     ?>
       <section class="father-ideas">
-        <a href="?idea=0" class="father-home">^Nemo</a>
+        <a href="?idea=0" class="father-home">^Neuron</a>
         <?php
         if(is_array($father_ideas)) :
           foreach($father_ideas as $father_idea) :

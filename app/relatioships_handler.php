@@ -3,6 +3,7 @@
   $args = [
     'id_father' => $_GET['father-id'],
     'id_children' => $_GET['child-id'],
+    'id_user' => $_SESSION['id'],
   ];
   $similar_relations = get_archive('idea_relation', $args);
   if($_GET['action'] == 'add') {

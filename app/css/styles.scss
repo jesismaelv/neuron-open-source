@@ -510,10 +510,27 @@ pre {
 .idea {
   font-size: 35px;
   opacity: 1;
+  position: relative;
+  max-width: 700px;
+  color: $gris2;
+
+  &.--hide {
+    &>.idea__children {
+      display: none;
+    }
+  }
 
   &>.idea__children>.idea {
     font-size: 0.8em;
     opacity: 0.8;
+  }
+
+  &.--focused {
+    opacity: 1;
+    color: $black;
+    > .idea__children {
+      border-left: 1px solid $black;
+    }
   }
 
 
@@ -539,11 +556,20 @@ pre {
 
   [contenteditable]:focus {
     outline: none;
-    background-color: lighter($white, 10%);
   }
 
   .goto-idea {
-    display: none;
+    color: $azul;
+    font-size: 0.5em;
+    display: block;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translate(0, -50%);
+    opacity: 0;
+    &:hover {
+      opacity: 1;
+    }
   }
 
   [class*="idea-content-wrapper"] {
@@ -555,19 +581,52 @@ pre {
   font-weight: normal;
   margin: 0;
   padding: 0;
+  padding-right: 2em;
   line-height: 1.5;
   margin-bottom: 0.5em;
-  color: $gris1;
+  color: inherit;
   font-size: inherit;
+  &:focus {
+    & ~ .goto-idea {
+      opacity: 1;
+    }
+    & ~ .hide-children {
+      opacity: 1;
+    }
+  }
 }
 
 .idea__content__wrapper {
   font-size: inherit;
   position: relative;
+  display: block;
+
+  .hide-children {
+
+    opacity: 0;
+    @include reset-appearance;
+    position: absolute;
+    left: -20px;
+    padding: 0.2em;
+    cursor: pointer;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.5em;
+    display: block;
+    background-color: $white;
+    &:hover {
+      opacity: 1;
+
+    }
+    &:before {
+      content: '[ \2022  ]';
+    }
+  }
 }
 
 .idea__children {
-  padding-left: 10px;
+  position: relative;
+  padding-left: 20px;
   border-left: 1px solid #c0c0c0;
 }
 

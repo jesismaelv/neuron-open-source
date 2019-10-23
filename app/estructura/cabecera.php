@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="shortcut icon" href="img/favicon.png" />
 
-  <title> Nemo - <?php echo @$page_title; ?> </title>
+  <title> Neuron - <?php echo @$page_title; ?> </title>
 </head>
 <body>
   <header class="fixed-header">

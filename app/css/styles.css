@@ -2256,10 +2256,20 @@ pre {
 
 .idea {
   font-size: 35px;
-  opacity: 1; }
+  opacity: 1;
+  position: relative;
+  max-width: 700px;
+  color: #333333; }
+  .idea.--hide > .idea__children {
+    display: none; }
   .idea > .idea__children > .idea {
     font-size: 0.8em;
     opacity: 0.8; }
+  .idea.--focused {
+    opacity: 1;
+    color: #111; }
+    .idea.--focused > .idea__children {
+      border-left: 1px solid #111; }
   .idea [contenteditable] {
     transition: all 0.5s ease; }
     .idea [contenteditable].--loading {
@@ -2271,10 +2281,18 @@ pre {
     .idea [contenteditable]:empty:focus {
       background-color: transparent; }
   .idea [contenteditable]:focus {
-    outline: none;
-    background-color: lighter(#f5f3f3, 10%); }
+    outline: none; }
   .idea .goto-idea {
-    display: none; }
+    color: #5f7e8b;
+    font-size: 0.5em;
+    display: block;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translate(0, -50%);
+    opacity: 0; }
+    .idea .goto-idea:hover {
+      opacity: 1; }
   .idea [class*="idea-content-wrapper"] {
     background-color: red; }
 
@@ -2282,17 +2300,45 @@ pre {
   font-weight: normal;
   margin: 0;
   padding: 0;
+  padding-right: 2em;
   line-height: 1.5;
   margin-bottom: 0.5em;
-  color: #111;
+  color: inherit;
   font-size: inherit; }
+  .idea__content:focus ~ .goto-idea {
+    opacity: 1; }
+  .idea__content:focus ~ .hide-children {
+    opacity: 1; }
 
 .idea__content__wrapper {
   font-size: inherit;
-  position: relative; }
+  position: relative;
+  display: block; }
+  .idea__content__wrapper .hide-children {
+    opacity: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    -o-appearance: none;
+    -moz-appearance: none;
+    background-color: transparent;
+    border: 0px solid transparent;
+    position: absolute;
+    left: -20px;
+    padding: 0.2em;
+    cursor: pointer;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.5em;
+    display: block;
+    background-color: #f5f3f3; }
+    .idea__content__wrapper .hide-children:hover {
+      opacity: 1; }
+    .idea__content__wrapper .hide-children:before {
+      content: '[ \2022  ]'; }
 
 .idea__children {
-  padding-left: 10px;
+  position: relative;
+  padding-left: 20px;
   border-left: 1px solid #c0c0c0; }
 
 .add-idea {

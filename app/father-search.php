@@ -13,11 +13,11 @@
   <li>
     <div class="add-as__wrapper">
       <button class="add-as add-as-parent button"
-              data-add-as-parent="<?php echo $result['id'] ?>">
+              data-add-as-parent="<?php echo $result['id'].','.$_GET['id'] ?>">
         ⤒
       </button>
       <button class="add-as add-as-child button"
-              data-add-as-child="<?php echo $result['id'] ?>"> 
+              data-add-as-parent="<?php echo $_GET['id'].','.$result['id'] ?>">
         ⤓
       </button>
     </div>
